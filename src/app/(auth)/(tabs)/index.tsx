@@ -6,6 +6,7 @@ import { styled } from "@/lib/styled";
 const SafeAreaView = styled(RNSafeAreaView);
 
 
+/** Renders the main authenticated tab with links to key app routes. */
 export default function App() {
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
