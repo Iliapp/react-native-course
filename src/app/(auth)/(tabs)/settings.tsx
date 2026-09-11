@@ -1,16 +1,16 @@
-import { cssInterop } from "nativewind";
 import { Text } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import { styled } from "@/lib/styled";
+const SafeAreaView = styled(RNSafeAreaView);
 
 
-cssInterop(RNSafeAreaView, { className: "style" });
 
 
 const Settings = () => {
   return (
-    <RNSafeAreaView className="flex-1 items-center justify-center bg-background p-5">
+    <SafeAreaView className="flex-1 bg-background p-5">
       <Text>Settings</Text>
-    </RNSafeAreaView>
+    </SafeAreaView>
   );
 }
 
