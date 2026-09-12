@@ -5,6 +5,7 @@ type StyledProps<P> = P & {
   className?: string;
 };
 
+/** Registers NativeWind class name support for a React component. */
 export function styled<P>(Component: ComponentType<P>): ComponentType<StyledProps<P>> {
   cssInterop(Component, { className: "style" } as Parameters<typeof cssInterop>[1]);
   return Component as ComponentType<StyledProps<P>>;

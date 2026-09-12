@@ -1,43 +1,36 @@
 import "../../global.css";
-import { Link } from "expo-router";
-import { Pressable, Text } from "react-native";
+import { Image, View, Text } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { styled } from "@/lib/styled";
+import images from "../../../../constants/images";
+import {HOME_BALANCE, HOME_USER} from "../../../../constants/data";
+import {icons} from "../../../../constants/icons";
+import {formatCurrency} from "../../../../lib/utils";
 const SafeAreaView = styled(RNSafeAreaView);
 
 
+/** Renders the main authenticated tab with links to key app routes. */
 export default function App() {
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
-      <Text className="text-xl font-bold text-success">
-        Welcome to Nativewind!
-      </Text>
+      <View className="home-header">
+        <View className="home-user">
+          <Image source={images.avatar} className="home-avatar" />
+            <Text className="home-user-name" > {HOME_USER.name}</Text>
+        </View>
+          <View className="home-add-button">
+            <Image source={icons.add} className="home-add-icon" />
+          </View>
+      </View>
+        <View className="home-balance-card">
+            <Text className="home-balance-label" >Balance</Text>
 
-
-      <Link href="/onboarding" asChild>
-        <Pressable className="mt-4 w-full rounded bg-primary p-4">
-          <Text className="text-white">Go to Onboarding</Text>
-        </Pressable>
-      </Link>
-      <Link href="/(auth)/sign-in" asChild>
-        <Pressable className="mt-4 w-full rounded bg-primary p-4">
-          <Text className="text-white">Go to Sign In</Text>
-        </Pressable>
-      </Link>
-      <Link href="/(auth)/sign-up" asChild>
-        <Pressable className="mt-4 w-full rounded bg-primary p-4">
-          <Text className="text-white">Go to Sign Up</Text>
-        </Pressable>
-      </Link>
-
-                  <Link href="/subscriptions/spotify">Go to Subscription(Spotify)</Link>
-                  <Link href={{
-                    pathname: "/subscriptions/[id]",
-                    params: { id: "claude" },
-                  }}
-                  >
-                    Claude Max Subscription
-                  </Link>
+            <View className="home-balance-row">
+                <Text className='home-balance-amount'>
+                    {formatCurrency(HOME_BALANCE.amount)}
+                </Text>
+            </View>
+        </View>
     </SafeAreaView>
   );
 }
