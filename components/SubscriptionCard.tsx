@@ -4,6 +4,15 @@ import clsx from "clsx";
 
 
 const SubsciptionCard = ({ name, price, currency, icon, billing, color, category, plan, renewalDate, expanded, onPress,paymentMethod, startDate, status }: SubscriptionCardProps) => {
+    const categoryValue = [category?.trim(), plan?.trim()].filter(Boolean).join(" / ") || "Not provided";
+    const paymentMethodValue = paymentMethod?.trim() || "Not provided";
+    const startDateValue = startDate ? formatSubscriptionDateTime(startDate) : "Not provided";
+    const renewalDateValue = renewalDate ? formatSubscriptionDateTime(renewalDate) : "Not provided";
+    const statusValue = status ? formatStatusLabel(status) : "Not provided";
+    const summaryValue = categoryValue !== "Not provided"
+        ? categoryValue
+        : renewalDateValue;
+
     return (
         <Pressable  onPress={onPress} className={clsx('sub-card', expanded ? 'sub-card-expanded' : 'bg-card')} style={!expanded && color ? { backgroundColor: color } : undefined}>
             <View className="sub-head">
@@ -12,7 +21,7 @@ const SubsciptionCard = ({ name, price, currency, icon, billing, color, category
                     <View className="sub-copy">
                         <Text numberOfLines={1} className="sub-title">{name}</Text>
                         <Text numberOfLines={1} ellipsizeMode="tail" className='sub-meta'>
-                            {category?.trim() | plan?.trim() || (renewalDate ? formatSubscriptionDateTime(renewalDate) : '')}
+                            {summaryValue}
                         </Text>
                     </View>
                 </View>
@@ -27,30 +36,37 @@ const SubsciptionCard = ({ name, price, currency, icon, billing, color, category
 
                         <View className="sub-row">
                             <View className="sub-row-copy">
+                                <Text className="sub-label">Payment method:</Text>
+                                <Text className="sub-value" numberOfLines={1}
+                                      ellipsizeMode="tail">{paymentMethodValue}</Text>
+                            </View>
+                        </View>
+                        <View className="sub-row">
+                            <View className="sub-row-copy">
                                 <Text className="sub-label">Category:</Text>
                                 <Text className="sub-value" numberOfLines={1}
-                                      ellipsizeMode="tail">{category?.trim() || plan?.trim()}</Text>
+                                      ellipsizeMode="tail">{categoryValue}</Text>
                             </View>
                         </View>
                         <View className="sub-row">
                             <View className="sub-row-copy">
                                 <Text className="sub-label">Started:</Text>
                                 <Text className="sub-value" numberOfLines={1}
-                                      ellipsizeMode="tail">{startDate ? formatSubscriptionDateTime(startDate) : ''}</Text>
+                                      ellipsizeMode="tail">{startDateValue}</Text>
                             </View>
                         </View>
                         <View className="sub-row">
                             <View className="sub-row-copy">
-                                <Text className="sub-label">Renewal dat:</Text>
+                                <Text className="sub-label">Renewal date:</Text>
                                 <Text className="sub-value" numberOfLines={1}
-                                      ellipsizeMode="tail">{renewalDate ? formatSubscriptionDateTime(renewalDate) : ''}</Text>
+                                      ellipsizeMode="tail">{renewalDateValue}</Text>
                             </View>
                         </View>
                         <View className="sub-row">
                             <View className="sub-row-copy">
                                 <Text className="sub-label">Status:</Text>
                                 <Text className="sub-value" numberOfLines={1}
-                                      ellipsizeMode="tail">{status ? formatStatusLabel(status) : ''}</Text>
+                                      ellipsizeMode="tail">{statusValue}</Text>
                             </View>
                         </View>
 
