@@ -1,23 +1,29 @@
 import "../../global.css";
-import {Image, View, Text, FlatList} from "react-native";
+import { useUser } from "@clerk/expo";
+import dayjs from "dayjs";
+import { useState } from "react";
+import { FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { styled } from "@/lib/styled";
-import images from "../../../../constants/images";
-import {HOME_BALANCE, HOME_SUBSCRIPTIONS, HOME_USER, UPCOMING_SUBSCRIPTIONS} from "../../../../constants/data";
-import {icons} from "../../../../constants/icons";
-import {formatCurrency} from "../../../../lib/utils";
-const SafeAreaView = styled(RNSafeAreaView);
-import dayjs from "dayjs";
 import ListHeading from "../../../../components/ListHeading";
 import UpcomingSubscriptionCard from "../../../../components/UpcomingSubscriptionCard";
-import SubsciptionCard from "../../../../components/SubscriptionCard";
-import {useState} from "react";
 import SubscriptionCard from "../../../../components/SubscriptionCard";
+import { HOME_BALANCE, HOME_SUBSCRIPTIONS, UPCOMING_SUBSCRIPTIONS } from "../../../../constants/data";
+import { icons } from "../../../../constants/icons";
+import images from "../../../../constants/images";
+import { formatCurrency } from "../../../../lib/utils";
 
+const SafeAreaView = styled(RNSafeAreaView);
 
 /** Renders the main authenticated tab with links to key app routes. */
 export default function App() {
     const [expandedSubscriptionId, setexpandedSubscriptionId] = useState<string | null>(null);
+    const { user } = useUser();
+    const userName =
+        user?.fullName ||
+        user?.username ||
+        user?.primaryEmailAddress?.emailAddress?.split("@")[0] ||
+        "User";
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
             <FlatList
@@ -25,8 +31,11 @@ export default function App() {
                     <>
                         <View className="home-header">
                             <View className="home-user">
-                                <Image source={images.avatar} className="home-avatar" />
-                                <Text className="home-user-name" > {HOME_USER.name}</Text>
+                                <Image
+                                    source={user?.imageUrl ? { uri: user.imageUrl } : images.avatar}
+                                    className="home-avatar"
+                                />
+                                <Text className="home-user-name">{userName}</Text>
                             </View>
                             <View className="home-add-button">
                                 <Image source={icons.add} className="home-add-icon" />
