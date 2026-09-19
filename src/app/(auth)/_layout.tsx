@@ -1,28 +1,41 @@
-import {SplashScreen, Stack} from "expo-router";
-import "../global.css"
-import {useFonts} from "expo-font";
-import {useEffect} from "react";
+import { useUser } from "@clerk/expo";
+import { Stack } from "expo-router";
+import { useEffect, useRef } from "react";
+import { posthog } from "@/config/posthog";
 
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    'sans-regular': require('../../../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'sans-medium': require('../../../assets/fonts/PlusJakartaSans-Medium.ttf'),
-    'sans-semibold': require('../../../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
-    'sans-bold': require('../../../assets/fonts/PlusJakartaSans-Bold.ttf'),
-    'sans-extrabold': require('../../../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
-    'sans-light': require('../../../assets/fonts/PlusJakartaSans-Light.ttf'),
-  })
+function AuthenticatedIdentity() {
+  const { user } = useUser();
+  const identifiedUserId = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!fontsLoaded) {
-      SplashScreen.hideAsync()
+    if (!user) {
+      identifiedUserId.current = null;
+      return;
     }
-  }, [fontsLoaded])
 
-  if (!fontsLoaded) {
-    return null;
-  }
-  return <Stack screenOptions={{ headerShown: false }} />;
+    if (identifiedUserId.current === user.id) {
+      return;
+    }
+
+    identifiedUserId.current = user.id;
+    posthog?.identify(user.id, {
+      $set: {
+        ...(user.primaryEmailAddress?.emailAddress
+          ? { email: user.primaryEmailAddress.emailAddress }
+          : {}),
+        ...(user.fullName ? { name: user.fullName } : {}),
+      },
+    });
+  }, [user]);
+
+  return null;
+}
+
+export default function RootLayout() {
+  return (
+    <>
+      <AuthenticatedIdentity />
+      <Stack screenOptions={{ headerShown: false }} />
+    </>
+  );
 }
