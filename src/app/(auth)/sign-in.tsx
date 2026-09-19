@@ -2,6 +2,7 @@ import { useSignIn } from "@clerk/expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
+import { posthog } from "@/config/posthog";
 import {
   AuthButton,
   AuthField,
@@ -56,6 +57,7 @@ export default function SignInScreen() {
         return;
       }
 
+      posthog?.capture("user_signed_in");
       router.replace("/(auth)/(tabs)");
     } catch (error) {
       setErrors({ form: getAuthErrorMessage(error) });
