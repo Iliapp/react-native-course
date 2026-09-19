@@ -2,6 +2,7 @@ import { useSignUp } from "@clerk/expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
+import { posthog } from "@/config/posthog";
 import {
   AuthButton,
   AuthField,
@@ -97,6 +98,7 @@ export default function SignUpScreen() {
         return;
       }
 
+      posthog?.capture("user_signed_up");
       router.replace("/(auth)/(tabs)");
     } catch (error) {
       setErrors({ form: getAuthErrorMessage(error) });
@@ -117,7 +119,10 @@ export default function SignUpScreen() {
       const { error } = await signUp.verifications.sendEmailCode();
       if (error) {
         setErrors({ form: getAuthErrorMessage(error) });
+        return;
       }
+
+      posthog?.capture("verification_code_resent");
     } catch (error) {
       setErrors({ form: getAuthErrorMessage(error) });
     } finally {

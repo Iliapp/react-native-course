@@ -4,6 +4,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useFonts } from "expo-font";
+import { PostHogProvider } from "posthog-react-native";
+import { posthog } from "@/config/posthog";
 import "./global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -34,9 +36,15 @@ export default function RootLayout() {
     return null;
   }
 
+  const routes = <Stack screenOptions={{ headerShown: false }} />;
+
   return (
     <ClerkProvider publishableKey={publishableKey!} tokenCache={tokenCache}>
-      <Stack screenOptions={{ headerShown: false }} />
+      {posthog ? (
+        <PostHogProvider client={posthog}>{routes}</PostHogProvider>
+      ) : (
+        routes
+      )}
     </ClerkProvider>
   );
 }

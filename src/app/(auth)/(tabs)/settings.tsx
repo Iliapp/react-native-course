@@ -1,6 +1,7 @@
 import { useAuth, useUser } from "@clerk/expo";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import { posthog } from "@/config/posthog";
 import { styled } from "@/lib/styled";
 import images from "../../../../constants/images";
 const SafeAreaView = styled(RNSafeAreaView);
@@ -11,6 +12,13 @@ const SafeAreaView = styled(RNSafeAreaView);
 const Settings = () => {
   const { signOut } = useAuth();
   const { user } = useUser();
+
+  const handleSignOut = async () => {
+    posthog?.capture("user_signed_out");
+    await signOut();
+    posthog?.reset();
+  };
+
   const userName =
     user?.fullName ||
     user?.username ||
@@ -30,7 +38,7 @@ const Settings = () => {
         </Text>
         <Pressable
           className="auth-button mt-8 w-full"
-          onPress={signOut}
+          onPress={handleSignOut}
           accessibilityRole="button"
           accessibilityLabel="Log out"
         >

@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { FlatList, Image, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import { posthog } from "@/config/posthog";
 import { styled } from "@/lib/styled";
 import ListHeading from "../../../../components/ListHeading";
 import UpcomingSubscriptionCard from "../../../../components/UpcomingSubscriptionCard";
@@ -24,6 +25,18 @@ export default function App() {
         user?.username ||
         user?.primaryEmailAddress?.emailAddress?.split("@")[0] ||
         "User";
+    const handleSubscriptionPress = (subscriptionId: string, status: string) => {
+        if (expandedSubscriptionId !== subscriptionId) {
+            posthog?.capture("subscription_details_expanded", {
+                subscription_id: subscriptionId,
+                subscription_status: status,
+            });
+        }
+
+        setexpandedSubscriptionId((currentId) =>
+            currentId === subscriptionId ? null : subscriptionId,
+        );
+    };
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
             <FlatList
@@ -79,8 +92,7 @@ export default function App() {
                       data={HOME_SUBSCRIPTIONS}
                       keyExtractor={(item) => item.id}
                       renderItem={({item}) => (<SubscriptionCard {...item} expanded={expandedSubscriptionId === item.id}
-                      onPress={() => setexpandedSubscriptionId((currentId)=>
-                          (currentId === item.id ? null : item.id))}
+                      onPress={() => handleSubscriptionPress(item.id, item.status)}
                       />
                       )}
                       extraData={expandedSubscriptionId}
