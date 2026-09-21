@@ -76,7 +76,7 @@ export default function CreateSubscriptionModal({
     onClose();
   };
 
-  /** Creates the subscription and records its creation when analytics is configured. */
+  /** Submits valid form data and, on success, records analytics when configured, resets the form, and closes the modal. */
   const handleSubmit = async () => {
     setSubmitted(true);
 
