@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { icons } from "../../constants/icons";
 import { findSubscriptionIcon } from "../lib/subscriptionIcons";
+import { posthog } from "@/config/posthog";
 
 const categories = [
   "Entertainment",
@@ -102,6 +103,12 @@ export default function CreateSubscriptionModal({
       };
 
       onCreate(subscription);
+      posthog?.capture("subscription_created", {
+        subscription_name: name.trim(),
+        subscription_price: parsedPrice,
+        subscription_frequency: frequency,
+        subscription_category: category,
+      });
       resetForm();
       onClose();
     } finally {
