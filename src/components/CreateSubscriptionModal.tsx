@@ -76,6 +76,7 @@ export default function CreateSubscriptionModal({
     onClose();
   };
 
+  /** Creates the subscription and records its creation when analytics is configured. */
   const handleSubmit = async () => {
     setSubmitted(true);
 
