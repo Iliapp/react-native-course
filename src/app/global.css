@@ -147,6 +147,14 @@
 		@apply text-sm font-sans-medium text-muted-foreground;
 	}
 
+	.subscription-search {
+		@apply rounded-2xl border border-border bg-card px-4 py-4 text-base font-sans-medium text-primary;
+	}
+
+	.subscription-count {
+		@apply mb-4 mt-3 text-sm font-sans-medium text-muted-foreground;
+	}
+
 	.sub-body {
 		@apply mt-6 gap-4;
 	}
@@ -316,7 +324,7 @@
 	}
 
 	.modal-container {
-		@apply mt-auto max-h-[85%] rounded-t-3xl bg-background;
+		@apply mt-auto h-[85%] max-h-[85%] rounded-t-3xl bg-background;
 	}
 
 	.modal-header {
