@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMemo } from "react";
 import { tabs } from "../../../../constants/data";
 import { colors, components } from "../../../../constants/theme";
+import { SubscriptionProvider } from "../../../context/SubscriptionContext";
 
 const tabBar = components.tabBar;
 
@@ -57,20 +58,22 @@ const TabLayout = () => {
 	}
 
 	return (
-		<Tabs screenOptions={screenOptions}>
-			{tabs.map((tab) => (
-				<Tabs.Screen
-					key={tab.name}
-					name={tab.name}
-					options={{
-						title: tab.title,
-						tabBarIcon: ({ focused }) => (
-							<TabIcon focused={focused} icon={tab.icon} />
-						),
-					}}
-				/>
-			))}
-		</Tabs>
+		<SubscriptionProvider>
+			<Tabs screenOptions={screenOptions}>
+				{tabs.map((tab) => (
+					<Tabs.Screen
+						key={tab.name}
+						name={tab.name}
+						options={{
+							title: tab.title,
+							tabBarIcon: ({ focused }) => (
+								<TabIcon focused={focused} icon={tab.icon} />
+							),
+						}}
+					/>
+				))}
+			</Tabs>
+		</SubscriptionProvider>
 	);
 };
 
