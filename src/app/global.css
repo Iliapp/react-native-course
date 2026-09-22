@@ -386,4 +386,145 @@
 	.category-chip-text-active {
 		@apply text-accent;
 	}
+
+	.insights-header {
+		@apply mb-8 flex-row items-center justify-between;
+	}
+
+	.insights-title {
+		@apply text-2xl font-sans-bold text-primary;
+	}
+
+	.insights-close,
+	.insights-menu {
+		@apply size-16 items-center justify-center rounded-full border border-black/20;
+	}
+
+	.insights-close-text {
+		@apply -mt-1 text-5xl font-sans-light leading-none text-primary;
+	}
+
+	.insights-menu-text {
+		@apply -mt-2 text-2xl font-sans-bold tracking-[2px] text-primary;
+	}
+
+	.insight-section-heading {
+		@apply mb-5 flex-row items-center justify-between;
+	}
+
+	.insight-section-title {
+		@apply text-2xl font-sans-bold text-primary;
+	}
+
+	.insight-view-all {
+		@apply rounded-full border border-black/20 px-4 py-2;
+	}
+
+	.insight-view-all-text {
+		@apply text-base font-sans-semibold text-primary;
+	}
+
+	.insight-chart {
+		@apply relative mb-5 h-80 overflow-hidden rounded-3xl bg-muted pb-4 pl-12 pr-4 pt-5;
+	}
+
+	.insight-chart-grid {
+		@apply absolute bottom-14 left-12 right-4 top-5;
+	}
+
+	.insight-chart-line {
+		@apply absolute left-0 right-0 border-t border-dashed border-black/10;
+	}
+
+	.insight-bars {
+		@apply flex-1 flex-row items-stretch justify-around;
+	}
+
+	.insight-axis {
+		@apply absolute bottom-14 left-3 top-5 justify-between;
+	}
+
+	.insight-axis-label {
+		@apply text-xs font-sans-medium text-primary/70;
+	}
+
+	.insight-bar-column {
+		@apply flex-1 items-center;
+	}
+
+	.insight-bar-area {
+		@apply relative w-full flex-1 items-center justify-end;
+	}
+
+	.insight-bar {
+		@apply w-4 rounded-full bg-primary;
+	}
+
+	.insight-bar-selected {
+		@apply bg-accent;
+	}
+
+	.insight-tooltip {
+		@apply absolute z-10 min-w-[64px] -translate-y-2 items-center rounded-xl bg-white px-2 py-1;
+	}
+
+	.insight-tooltip-text {
+		@apply whitespace-nowrap text-sm font-sans-bold text-accent;
+	}
+
+	.insight-bar-label {
+		@apply mt-3 text-sm font-sans-semibold text-primary/75;
+	}
+
+	.insight-expense-card {
+		@apply mb-10 flex-row items-center justify-between rounded-3xl border border-black/20 bg-card px-4 py-5;
+	}
+
+	.insight-expense-title {
+		@apply text-xl font-sans-bold text-primary;
+	}
+
+	.insight-expense-month {
+		@apply mt-1 text-base font-sans-medium text-primary/75;
+	}
+
+	.insight-expense-total {
+		@apply text-xl font-sans-bold text-primary;
+	}
+
+	.insight-expense-change {
+		@apply mt-1 text-sm font-sans-medium text-primary/75;
+	}
+
+	.insight-history-heading {
+		@apply mb-5;
+	}
+
+	.insight-history-card {
+		@apply min-h-24 flex-row items-center rounded-3xl px-4 py-3;
+	}
+
+	.insight-history-icon {
+		@apply size-16 rounded-2xl;
+	}
+
+	.insight-history-copy {
+		@apply ml-3 min-w-0 flex-1;
+	}
+
+	.insight-history-name {
+		@apply text-lg font-sans-bold text-primary;
+	}
+
+	.insight-history-date {
+		@apply mt-1 text-sm font-sans-medium text-primary/70;
+	}
+
+	.insight-history-price {
+		@apply text-lg font-sans-bold text-primary;
+	}
+
+	.insight-history-billing {
+		@apply mt-1 text-sm font-sans-medium text-primary/70;
+	}
 }
